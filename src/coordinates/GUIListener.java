@@ -2,6 +2,7 @@ package coordinates;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.FileNotFoundException;
 
 public class GUIListener implements WindowListener {
 
@@ -19,6 +20,11 @@ public class GUIListener implements WindowListener {
     @Override
     public void windowClosing(WindowEvent e) {
         singleton.printCoords();
+        try {
+            singleton.writeCoordsToCSV();
+        } catch (FileNotFoundException fileNotFoundException) {
+            fileNotFoundException.printStackTrace();
+        }
     }
 
     @Override

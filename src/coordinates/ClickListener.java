@@ -16,7 +16,7 @@ public class ClickListener implements MouseListener {
     ClickListener(Component parent, JLabel positionText, Singleton singleton){
         this.parent = parent;
         this.positionText = positionText;
-        this.normalizer = new Normalizer(20,20,JPG_WIDTH,JPG_HEIGTH);
+        this.normalizer = new Normalizer(600,800,JPG_WIDTH,JPG_HEIGTH);
         singleton.setNormalizer(normalizer);
     }
 
