@@ -1,21 +1,31 @@
 package main;
 
+import mapVisualizer.DijkstraSingleton;
+
 import java.util.*;
 
 public class Dijkstra {
 
     List<Node> cluster;
     List<Node> queue = new ArrayList<>();
+    List<Node> processedNodes = new ArrayList<>();
     String destination;
     String startCity;
     Stack<Node> iKnoDaWay = new Stack();
     List<Node> debugList = new ArrayList<>();
 
-    Dijkstra(){
+    DijkstraSingleton updater;
+
+    public Dijkstra(){
         this.cluster = new ClusterCreator().getCluster();
     }
-    
-    public void findWayBetween(String startCity, String destinationCity) {
+
+    public Dijkstra(DijkstraSingleton dijkstraSingleton) {
+        this.cluster = new ClusterCreator().getCluster();
+        this.updater = dijkstraSingleton;
+    }
+
+    public void findWayBetween(String startCity, String destinationCity) throws InterruptedException {
         this.destination = destinationCity;
         this.startCity = startCity;
         if(!inputValid(startCity, destinationCity)) return;
@@ -26,7 +36,11 @@ public class Dijkstra {
         fillWayStack(getCityFromCluster(destinationCity));
         printResult();
     }
-    
+
+    public List<Node> getProcessedNodes() {
+        return processedNodes;
+    }
+
     private boolean inputValid(String startCity, String destinationCity) {
       return  checkIfTownExists(startCity) && checkIfTownExists(destinationCity);
     }
@@ -61,13 +75,19 @@ public class Dijkstra {
     private void findShortestWay(){
         Collections.sort(queue);
         try {
+
             Node firstNode = queue.remove(0);
+            if(!processedNodes.contains(firstNode)) processedNodes.add(firstNode);
             debugList.add(firstNode);
+            if (updater!=null) {
+                Thread.sleep(1000);
+                updater.updatePaths();
+            }
             calculateShortestDistance(firstNode);
             if (!queue.isEmpty()) {
                 findShortestWay();
             }
-        }catch (NullPointerException e){
+        }catch (NullPointerException | InterruptedException e){
             e.printStackTrace();
         }
 

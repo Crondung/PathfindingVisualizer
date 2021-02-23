@@ -5,6 +5,10 @@ public class Main {
 	public static void main(String[] args) {
 
 		Dijkstra dijkstra = new Dijkstra();
-		dijkstra.findWayBetween("Berlin", "Mannheim");
+		try {
+			dijkstra.findWayBetween("Berlin", "Mannheim");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 }
