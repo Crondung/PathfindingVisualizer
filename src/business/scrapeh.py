@@ -3,11 +3,14 @@ from bs4 import BeautifulSoup
 
 key = []
 
-url = "http://api.nordenkel.de/"
+url = "https://dribbble.com/dse/about"
 
 page = requests.get(url)
 
 soup = BeautifulSoup(page.content, 'html.parser')
+
+#about = soup.find('p', class_='bio-text')
+
 
 first = soup.text[0:len(soup.text)//2]
 second = soup.text[len(soup.text)//2:len(soup.text)]
@@ -19,8 +22,8 @@ for cf, cs in zip(first, second):
         key.append(cs)
 
 
-answerToEverything = #TODO
-vokale = [] #TODO
+answerToEverything = 42
+vokale = ['a', 'e', 'i', 'o', 'u']
 
 realkey = [x if x not in vokale else str(answerToEverything) for x in key]
 #bisschen zu lang
